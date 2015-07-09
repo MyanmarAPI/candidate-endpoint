@@ -1,0 +1,6 @@
+/lumen.log
+/vendor
+.env
+.idea/*
+.DS_Store
+Thumbs.db

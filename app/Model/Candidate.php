@@ -11,6 +11,23 @@
 namespace App\Model;
 
 
-class Candidate {
+class Candidate extends AbstractModel
+{
 
+    /**
+     * Return mongo collection name to be connected
+     *
+     * <code>
+     *     public function getCollectionName()
+     *     {
+     *         return 'user';
+     *     }
+     * </code>
+     *
+     * @return string
+     */
+    public function getCollectionName()
+    {
+        return 'candidate';
+    }
 }

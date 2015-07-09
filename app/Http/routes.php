@@ -24,11 +24,6 @@ $app->group([
 
     $pre = 'v1.candidate.';
 
-    $app->get('/{id}', [
-        'as'    => $pre . 'show',
-        'uses'  => 'CandidateController@show'
-    ]);
-
     $app->get('/list', [
         'as'    => $pre . 'list',
         'uses'  => 'CandidateController@candidateList'
@@ -37,6 +32,11 @@ $app->group([
     $app->get('/search', [
         'as'    => $pre . 'search',
         'uses'  => 'CandidateController@search'
+    ]);
+
+    $app->get('/{id}', [
+        'as'    => $pre . 'show',
+        'uses'  => 'CandidateController@show'
     ]);
 
 });

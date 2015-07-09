@@ -15,7 +15,28 @@ $app->get('/', function() use ($app) {
     return $app->welcome();
 });
 
-$app->group(['middleware' => 'auth'], function () use ($app)
+$app->group([
+    'middleware'=> 'auth',
+    'prefix'    => 'candidate/v1',
+    'namespace' => 'App\Http\Controllers'
+], function () use ($app)
 {
-    // do your stuff here
+
+    $pre = 'v1.candidate.';
+
+    $app->get('/{id}', [
+        'as'    => $pre . 'show',
+        'uses'  => 'CandidateController@show'
+    ]);
+
+    $app->get('/list', [
+        'as'    => $pre . 'list',
+        'uses'  => 'CandidateController@candidateList'
+    ]);
+
+    $app->get('/search', [
+        'as'    => $pre . 'search',
+        'uses'  => 'CandidateController@search'
+    ]);
+
 });

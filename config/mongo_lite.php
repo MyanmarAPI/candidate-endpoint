@@ -1,7 +1,7 @@
 <?php 
 
 return [
-    'host'      => 'localhost',
+    'host'      => '10.240.33.97',
     'port'      => 27017,
     'database'  => 'elecapi',
     'user'      => '',

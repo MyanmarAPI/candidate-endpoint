@@ -11,15 +11,18 @@
 namespace App\Transformers;
 
 
-use App\Model\Candidate;
+use App\Model\Party;
 use App\Transformers\Contracts\TransformerInterface;
 use League\Fractal\TransformerAbstract;
 
 class CandidateTransformer extends TransformerAbstract implements TransformerInterface
 {
+    protected $availableIncludes = [
+        'party'
+    ];
+
     public function transform($data)
     {
-
         return [
             'id'                => (string)$data->_id,
             'name'              => $data->name,
@@ -29,26 +32,18 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'education'         => $data->education,
             'occupation'        => $data->occupation,
             'nationality_religion'  => $data->religion,
-            'residency'         => $this->makeResidency(),
-            'constituency'      => $this->makeConstituency(),
-            'party'             => $this->makeParty(),
+            'residency'         => $data->residency,
+            'constituency'      => $data->constituency,
+            'party_id'          => $data->party_id,
             'mother'            => $data->mother,
             'father'            => $data->father
         ];
     }
 
-    public function makeResidency()
+    public function includeParty($data)
     {
-        return null;
-    }
+        $party = (new Party())->find($data->party_id);
 
-    protected function makeConstituency()
-    {
-        return null;
-    }
-
-    protected function makeParty()
-    {
-        return null;
+        return $this->item($party, new PartyTransformer());
     }
 }

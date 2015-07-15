@@ -34,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         $commands = [
-            'App\Console\Commands\ImportCommand'
+            'App\Console\Commands\ImportCommand',
+            'App\Console\Commands\ImportPartyCommand'
         ];
 
         $this->commands($commands);

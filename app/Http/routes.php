@@ -17,7 +17,7 @@ $app->get('/', function() use ($app) {
 
 $app->group([
     'middleware'=> 'auth',
-    'prefix'    => 'candidate/v1',
+    'prefix'    => 'candidate',
     'namespace' => 'App\Http\Controllers'
 ], function () use ($app)
 {

@@ -27,7 +27,7 @@ class PartyTransformer
             ],
             'register'  => [
                 'register'  => timestamp($data->registration_application_date),
-                'approval'  => timestamp($data->registration_approval_date)
+                'approved'  => timestamp($data->registration_approval_date)
             ],
             'number'    => $data->approved_party_number,
             'contact'   => $data->contact,

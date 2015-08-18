@@ -157,7 +157,7 @@ abstract class AbstractModel
                         ->skip($skip)
                         ->get();
 
-        return new LengthAwarePaginator($result, $this->getCollection()->count(), $perPage, $page);
+        return new LengthAwarePaginator($result, count($result), $perPage, $page);
     }
 
     /**

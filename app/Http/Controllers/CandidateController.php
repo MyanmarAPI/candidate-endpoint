@@ -47,13 +47,13 @@ class CandidateController extends Controller
         // Filter gender
         if ($gender = app('request')->input('gender'))
         {
-            $model = $model->where('gender', $gender);
+            $model = $model->where('gender', strtolower($gender));
         }
 
         // Filter religion
         if ($religion = app('request')->input('religion'))
         {
-            $model = $model->where('religion', $religion);
+            $model = $model->where('religion', ucfirst($religion));
         }
 
         // Filter legislature

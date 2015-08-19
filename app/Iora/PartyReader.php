@@ -32,7 +32,12 @@ class PartyReader extends Reader
                     break;
                 case 'Contact':
                     $result[snake_case($value)] = $this->makePhone($data[$index]);
-
+                    break;
+                case 'ST_PCODE':
+                    $result[$value] = $data[$index];
+                    break;
+                case 'DT_PCODE':
+                    $result[$value] = $data[$index];
                     break;
                 default:
                     $result[snake_case($value)] = $data[$index];

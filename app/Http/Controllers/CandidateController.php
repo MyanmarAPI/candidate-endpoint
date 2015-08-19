@@ -68,6 +68,26 @@ class CandidateController extends Controller
             $model = $model->where('party_id', $party);
         }
 
+        // Filter by CONSTITUENCY ST_PCODE 
+        if ($con_st_pcode = app('request')->input('constituency_st_pcode')) {
+            $model = $model->where('constituency.ST_PCODE', $con_st_pcode);
+        }
+
+        // Filter by CONSTITUENCY DT_PCODE 
+        if ($con_dt_pcode = app('request')->input('constituency_dt_pcode')) {
+            $model = $model->where('constituency.DT_PCODE', $con_dt_pcode);
+        }
+
+        // Filter by Residency ST_PCODE 
+        if ($res_st_pcode = app('request')->input('residency_st_pcode')) {
+            $model = $model->where('residency.ST_PCODE', $res_st_pcode);
+        }
+
+        // Filter by Residency DT_PCODE 
+        if ($res_dt_pcode = app('request')->input('residency_dt_pcode')) {
+            $model = $model->where('residency.DT_PCODE', $res_dt_pcode);
+        }
+
         return $model->paginate();
     }
 }

@@ -76,7 +76,7 @@ class CandidateSeeder extends Seeder
 
     protected function getPartyId($parties)
     {
-        $party = $parties[rand(0, count($parties))];
+        $party = $parties[rand(0, count($parties)-1)];
 
         return (string)$party['_id'];
     }

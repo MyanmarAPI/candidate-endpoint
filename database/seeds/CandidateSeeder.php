@@ -38,6 +38,7 @@ class CandidateSeeder extends Seeder
 
             $data = [
                 'name'  => $faker->name,
+                'gender' => $faker->randomElement(['male', 'female']),
                 'legislature'   => $faker->randomElement(['Amyotha Hluttaw', 'Pyithu Hluttaw', 'Region', 'State']),
                 'nrc'   => $faker->bothify('##/???(N)######'),
                 'dob'   => new \MongoDate($faker->dateTime($max = 'now')->format('U')),

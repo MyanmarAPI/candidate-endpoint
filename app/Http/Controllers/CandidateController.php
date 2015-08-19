@@ -24,6 +24,10 @@ class CandidateController extends Controller
     {
         $data = (new Candidate())->find($id);
 
+        if (!$data) {
+            return response_missing();
+        }
+
         $item = $this->transform($data, new CandidateTransformer(), false);
 
         return response_ok($item);

@@ -16,6 +16,15 @@ class CandidateSeeder extends Seeder
 {
     public function run()
     {
+
+        $candidate = new Candidate();
+
+        $collection_name = $candidate->getCollectionName();
+
+        $connection = \Hexcores\MongoLite\Connection::instance();
+
+        $connection->collection($collection_name)->drop();
+
         $faker = Factory::create();
 
         $parties = mongo_lite('party')->all();
@@ -24,6 +33,8 @@ class CandidateSeeder extends Seeder
         {
             $residency = $faker->state() . ' / ' . $faker->city();
             $constituency = $faker->city() . ' / ' . $faker->cityPrefix() . ' / ' . $faker->state();
+
+            $pcode = $this->getRandomPcode();
 
             $data = [
                 'name'  => $faker->name,
@@ -37,11 +48,15 @@ class CandidateSeeder extends Seeder
                 'residency' => [
                     'type'  => $residency,
                     'name'  => $residency . ' name',
+                    'ST_PCODE' => $pcode['ST_PCODE'],
+                    'DT_PCODE' => $pcode['DT_PCODE'],
                     'count' => $faker->randomNumber(5)
                 ],
                 'constituency'  => [
                     'type'  => $constituency,
                     'name'  => $faker->word(),
+                    'ST_PCODE' => $pcode['ST_PCODE'],
+                    'DT_PCODE' => $pcode['DT_PCODE'],
                     'count' => $faker->randomNumber(5)
                 ],
                 'father'    => [
@@ -54,8 +69,6 @@ class CandidateSeeder extends Seeder
                 ],
             ];
 
-            $candidate = new Candidate();
-
             $candidate->getCollection()->insert($data);
         }
     }
@@ -65,5 +78,18 @@ class CandidateSeeder extends Seeder
         $party = $parties[rand(0, count($parties))];
 
         return (string)$party['_id'];
+    }
+
+    protected function getRandomPcode()
+    {
+        $rand_st = rand(1,18);
+
+        $st_num = sprintf("%02d", $rand_st);
+
+        $ST_PCODE = "MMR0".$st_num;
+
+        $DT_PCODE = $ST_PCODE."D001";
+
+        return ['ST_PCODE' => $ST_PCODE, 'DT_PCODE' => $DT_PCODE];
     }
 }

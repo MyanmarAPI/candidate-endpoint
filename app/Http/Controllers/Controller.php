@@ -75,6 +75,15 @@ class Controller extends BaseController
 
         $data = $manager->createData($resource)->toArray();
 
+        // Tweak for Retrofit Mapper
+        if ( isset($data['meta']['pagination']['links'])) {
+            $links = $data['meta']['pagination']['links'];
+
+            if ( empty($links)) {
+                $data['meta']['pagination']['links'] = new \stdClass();
+            }
+        }
+
         return $data;
     }
 }

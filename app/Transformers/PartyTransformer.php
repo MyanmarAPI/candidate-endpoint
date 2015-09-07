@@ -16,28 +16,26 @@ class PartyTransformer
     public function transform($data)
     {
         return [
-            'name'      => $data->party_name,
-            'name_eng'  => $data->party_name_english,
-            'members'   => $data->member_count,
-            'leader'    => $data->leadership,
+            '_id'             => (string)$data->_id,
+            'party_name'      => $data->party_name,
+            'party_name_english'  => $data->party_name_english,
+            'abbreviation' => $data->abbreviation,
+            'member_count'   => $data->member_count,
+            'leadership'    => $data->leadership,
             'chairman'  => $data->chairman,
-            'founded'   => [
-                'founded'       => timestamp($data->establishment_date),
-                'approved'      => timestamp($data->establishment_approval_date)
-            ],
-            'register'  => [
-                'register'  => timestamp($data->registration_application_date),
-                'approved'  => timestamp($data->registration_approval_date)
-            ],
-            'number'    => $data->approved_party_number,
-            'contact'   => $data->contact,
-            'address'   => $data->headquarters,
+            'establishment_date' => timestamp($data->establishment_date),
+            'establishment_approval_date' => timestamp($data->establishment_approval_date),
+            'registration_application_date' => timestamp($data->registration_application_date),
+            'registration_approval_date' => timestamp($data->registration_approval_date),
+            'approved_party_number'    => $data->approved_party_number,
+            'party_flag' => $data->party_flag,
+            'party_seal' => $data->party_seal,
             'region'    => $data->region,
-            'files'     => [
-                'flag'      => $data->party_flag,
-                'seal'      => $data->party_seal,
-                'policy'    => $data->policy
-            ]
+            'ST_PCODE' => $data->ST_PCODE,
+            'DT_PCODE' => $data->DT_PCODE,
+            'headquarters'   => $data->headquarters,
+            'contact'   => $data->contact,
+            'policy'    => $data->policy,
         ];
     }
 }

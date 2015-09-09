@@ -24,7 +24,7 @@ class PartyReader extends Reader
                 case 'EstablishmentApprovalDate':
                 case 'RegistrationApplicationDate':
                 case 'RegistrationApprovalDate':
-                    $result[snake_case($value)] = new \MongoDate(strtotime($data[$index]));
+                    $result[snake_case($value)] = ($data[$index]) ? new \MongoDate(strtotime($data[$index])) : '';
                     break;
                 case 'Chairman':
                 case 'Leadership':

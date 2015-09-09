@@ -15,7 +15,14 @@ use Illuminate\Console\Command;
 
 class ImportPartyCommand extends Command
 {
-    protected $name = 'import:party';
+    //protected $name = 'import:party {filename}';
+
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'import:party {filename}';
 
     protected $description = 'Import all party data from csv file';
 
@@ -41,7 +48,7 @@ class ImportPartyCommand extends Command
 
     protected function import()
     {
-        $file = storage_path('data/party.csv');
+        $file = storage_path('data/'.$this->argument('filename'));
 
         if (! $this->filesystem->exists($file))
         {

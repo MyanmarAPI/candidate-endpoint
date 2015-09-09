@@ -60,7 +60,9 @@ class PartyReader extends Reader
 
     protected function makePhone($data)
     {
-        $phones = explode(',', $data);
+        return preg_split("/(,|၊)\s+/", $data);
+
+        /*$phones = explode('၊', $data);
 
         $result = [];
 
@@ -69,6 +71,6 @@ class PartyReader extends Reader
             $result[] = preg_replace("/[^0-9]/i", '', $phone);
         }
 
-        return $result;
+        return $result;*/
     }
 }

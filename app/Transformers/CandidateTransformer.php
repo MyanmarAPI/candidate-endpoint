@@ -27,6 +27,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'id'                => (string)$data->_id,
             'name'              => $data->name,
             'gender'            => $data->gender,
+            'photo_url'         => $data->photo_url,
             'legislature'       => $data->legislature,
             'national_id'       => $data->nrc,
             'birthdate'         => timestamp($data->dob),

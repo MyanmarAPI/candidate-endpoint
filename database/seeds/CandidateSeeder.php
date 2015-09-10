@@ -45,6 +45,7 @@ class CandidateSeeder extends Seeder
                 'education' => $faker->words($nb = rand(0, 4)),
                 'occupation'=> $faker->words($nb = rand(0, 4)),
                 'religion'  => $faker->randomElement(['Buddhism', 'Christian', 'Islam', 'Hindu']),
+                'photo_url' => $faker->imageUrl(400, 400, 'business'),
                 'party_id'  => $this->getPartyId($parties),
                 'residency' => [
                     'type'  => $residency,

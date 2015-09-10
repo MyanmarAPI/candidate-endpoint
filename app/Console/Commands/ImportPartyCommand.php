@@ -48,7 +48,13 @@ class ImportPartyCommand extends Command
 
     protected function import()
     {
-        $file = storage_path('data/'.$this->argument('filename'));
+        $filename = $this->argument('filename');
+
+        if ( strpos($filename, '.csv') == false) {
+            $filename = $filename . '.csv';
+        }
+
+        $file = storage_path('data/' . $filename);
 
         if (! $this->filesystem->exists($file))
         {

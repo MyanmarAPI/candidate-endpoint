@@ -26,15 +26,16 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
         return [
             'id'                => (string)$data->_id,
             'name'              => $data->name,
+            'mpid'              => $data->mpid,
             'gender'            => $data->gender,
             'photo_url'         => $data->photo_url,
             'legislature'       => $data->legislature,
-            'national_id'       => $data->nrc,
-            'birthdate'         => timestamp($data->dob),
+            'birthdate'         => timestamp($data->birthdate),
             'education'         => $data->education,
             'occupation'        => $data->occupation,
-            'nationality_religion'  => $data->religion,
-            'residency'         => $data->residency,
+            'ethnicity'         => $data->ethnicity,
+            'religion'          => $data->religion,
+            'ward_village'      => $data->ward_village,
             'constituency'      => $data->constituency,
             'party_id'          => $data->party_id,
             'mother'            => $data->mother,
@@ -44,7 +45,12 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
 
     public function includeParty($data)
     {
-        $party = (new Party())->find($data->party_id);
+        $party = [];
+        $partyId = $data->party_id;
+
+        if ( ! is_null($partyId)) {
+            $party = (new Party())->getCollection()->first(['party_number' => $partyId]);
+        }
 
         return $this->item($party, new PartyTransformer());
     }

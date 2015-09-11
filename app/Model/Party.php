@@ -21,4 +21,17 @@ class Party extends AbstractModel
     {
         return 'party';
     }
+
+    public static function getPartyidByName($name)
+    {
+    	$inc = new static;
+
+    	$result = $inc->where('party_name', $name)->get();
+
+    	if ($result) {
+    		return (string)$result[0]->_id;
+    	}
+
+    	return false;
+    }
 }

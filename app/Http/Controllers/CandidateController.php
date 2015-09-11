@@ -94,7 +94,7 @@ class CandidateController extends Controller
         // Filter party
         if ($party = app('request')->input('party'))
         {
-            $model = $model->where('party_id', $party);
+            $model = $model->where('party_id', (int) $party);
         }
 
         // Filter by CONSTITUENCY ST_PCODE 

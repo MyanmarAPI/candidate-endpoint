@@ -6,17 +6,17 @@ Check [Documentation](http://myanmarapi.github.io/endpoints/candidate.html) for 
 
 ####Import Data
 
-Put CSV files into `storage/data/`
+Put CSV files into `storage/data/` with filename `candidate.csv` and `party.csv`.
 
 Then, you can use the following commands to import the data. 
 
 **Party Data**
 
-	php artisan import:party filename.csv
+	php artisan import:party party.csv
     
 **Candidate Data**
 
-	php artisan import:candidate filename.csv
+	php artisan import:candidate candidate.csv
     
 **Drop Collection**
 

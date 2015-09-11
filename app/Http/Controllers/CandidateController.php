@@ -74,13 +74,13 @@ class CandidateController extends Controller
         // Filter gender
         if ($gender = app('request')->input('gender'))
         {
-            $model = $model->where('gender', strtolower($gender));
+            $model = $model->where('gender', strtoupper($gender));
         }
 
         // Filter religion
         if ($religion = app('request')->input('religion'))
         {
-            $model = $model->where('religion', ucfirst($religion));
+            $model = $model->where('religion', $religion);
         }
 
         // Filter legislature
@@ -106,14 +106,14 @@ class CandidateController extends Controller
         }
 
         // Filter by Residency ST_PCODE 
-        if ($res_st_pcode = app('request')->input('residency_st_pcode')) {
+        /*if ($res_st_pcode = app('request')->input('residency_st_pcode')) {
             $model = $model->where('residency.ST_PCODE', $res_st_pcode);
-        }
+        }*/
 
         // Filter by Residency DT_PCODE 
-        if ($res_dt_pcode = app('request')->input('residency_dt_pcode')) {
+        /*if ($res_dt_pcode = app('request')->input('residency_dt_pcode')) {
             $model = $model->where('residency.DT_PCODE', $res_dt_pcode);
-        }
+        }*/
 
         return $model->paginate();
     }

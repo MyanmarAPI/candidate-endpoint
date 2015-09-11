@@ -56,6 +56,10 @@ class ImportCommand extends Command{
             return $this->line('[ERROR !] File not found - ' . $file);
         }
 
+        if ($this->option('drop')) {
+            $this->dropCollection($model);
+        }
+
         $this->info('Importing data to ' . $model);
 
         $reader = new Reader($file);
@@ -63,6 +67,19 @@ class ImportCommand extends Command{
         $reader->model($model)->import();
 
         $this->info('[SUCCESS] Imported ' . $reader->getRows() . ' rows');
+    }
+    
+    /**
+     * Drop the collection from database.
+     *
+     * @param string $collecttion Name of the collection
+     * @return void
+     */
+    protected function dropCollection($collection)
+    {
+        $this->info('Drop the collection ' . $collection);
+
+        mongo_lite($collection)->collection()->drop();
     }
 
     /**
@@ -83,7 +100,8 @@ class ImportCommand extends Command{
     protected function getOptions()
     {
         return [
-            ['path', null, InputOption::VALUE_OPTIONAL, '--path="path/to/dir" Directory which contain csv data files']
+            ['path', null, InputOption::VALUE_OPTIONAL, '--path="path/to/dir" Directory which contain csv data files'],
+            ['drop', null, InputOption::VALUE_NONE, 'Drop the collection before import.']
         ];
     }
 

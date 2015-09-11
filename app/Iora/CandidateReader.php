@@ -35,8 +35,9 @@ class CandidateReader extends Reader
                     break;
                 case 'state' : 
                     $result['constituency']['state'] = $data[$index];
-                    $result['constituency']['ST_PCODE'] = '';
-                    $result['constituency']['DT_PCODE'] = '';
+                    $pcode = $this->getRandomPcode();
+                    $result['constituency']['ST_PCODE'] = $pcode['ST_PCODE'];
+                    $result['constituency']['DT_PCODE'] = $pcode['DT_PCODE'];
                     break;
                 case 'constituency_name' : 
                     $result['constituency']['name'] = $data[$index];
@@ -53,8 +54,9 @@ class CandidateReader extends Reader
                     break;
                 case 'ward_village' : 
                     $result['residency']['name'] = $data[$index];
-                    $result['residency']['ST_PCODE'] = '';
-                    $result['residency']['DT_PCODE'] = '';
+                    $pcode = $this->getRandomPcode();
+                    $result['residency']['ST_PCODE'] = $pcode['ST_PCODE'];
+                    $result['residency']['DT_PCODE'] = $pcode['DT_PCODE'];
                     break;
                 case 'voter_list_number' : 
                     $result['residency']['voter_count'] = $data[$index];

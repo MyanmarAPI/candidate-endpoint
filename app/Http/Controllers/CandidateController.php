@@ -52,11 +52,13 @@ class CandidateController extends Controller
      **/
     public function search()
     {
-        $q = app('request')->input('q');
+        if (!app('request')->has('q')) {
 
-        if (!$q) {
             return response_missing();
+            
         }
+
+        $q = app('request')->input('q');
 
         $model = new Candidate();
 

@@ -39,6 +39,9 @@ class PartyReader extends Reader
                 case 'DT_PCODE':
                     $result[$value] = $data[$index];
                     break;
+                case 'PartyNumber':
+                    $result['party_number'] = (int) $data[$index];
+                    break;
                 default:
                     $result[snake_case($value)] = $data[$index];
 

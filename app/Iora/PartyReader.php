@@ -54,6 +54,11 @@ class PartyReader extends Reader
 
     protected function makeName($data)
     {
+        // Fix 0 and empty for array list
+        if ( $data == '0' || empty($data)) {
+            return [];
+        }
+
         return array_map(function($item)
         {
             return preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','',$item);

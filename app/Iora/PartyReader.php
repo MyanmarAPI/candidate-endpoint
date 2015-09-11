@@ -31,7 +31,7 @@ class PartyReader extends Reader
                     $result[snake_case($value)] = $this->makeName($data[$index]);
                     break;
                 case 'Contact':
-                    $result[snake_case($value)] = $this->makePhone($data[$index]);
+                    $result[snake_case($value)] = $this->makeName($data[$index]);
                     break;
                 case 'ST_PCODE':
                     $result[$value] = $data[$index];
@@ -61,19 +61,4 @@ class PartyReader extends Reader
         }, explode('၊', $data));
     }
 
-    protected function makePhone($data)
-    {
-        return preg_split("/(,|၊)\s+/", $data);
-
-        /*$phones = explode('၊', $data);
-
-        $result = [];
-
-        foreach ($phones as $phone)
-        {
-            $result[] = preg_replace("/[^0-9]/i", '', $phone);
-        }
-
-        return $result;*/
-    }
 }

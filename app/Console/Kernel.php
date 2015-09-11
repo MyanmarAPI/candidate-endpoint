@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \Hexcores\Api\Console\ApiKeyGenerate::class,
-        \App\Console\Commands\ImportCandidateCommand::class
+        \App\Console\Commands\ImportCandidateCommand::class,
+        \App\Console\Commands\DropCommand::class
     ];
 
     /**

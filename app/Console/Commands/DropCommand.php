@@ -3,9 +3,7 @@
  * This file is part of php-endpoint-bootstrap project
  * 
  * @package App\Console\Commands
- * @author Yan Naing <yannaing@hexcores.com>
- * Date: 6/30/15
- * Time: 1:16 PM
+ * @author Nyan Lynn Htut <naynlynnhtut@hexcores.com>
  */
 
 namespace App\Console\Commands;
@@ -13,7 +11,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
-class DropCommand extends Command{
+class DropCommand extends Command
+{
 
     protected $name = 'iora:drop';
 

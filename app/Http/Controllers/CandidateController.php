@@ -44,6 +44,29 @@ class CandidateController extends Controller
         return response_ok($data);
     }
 
+    /**
+     * Search Candidate by Name
+     *
+     * @return void
+     * @author 
+     **/
+    public function search()
+    {
+        $q = app('request')->input('q');
+
+        if (!$q) {
+            return response_missing();
+        }
+
+        $model = new Candidate();
+
+        $result = $model->like('name', $q)->paginate();
+
+        $data = $this->transform($result, new CandidateTransformer(), true);
+
+        return response_ok($data);
+    }
+
     protected function query()
     {
         $model = new Candidate();

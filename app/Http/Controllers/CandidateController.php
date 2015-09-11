@@ -74,26 +74,23 @@ class CandidateController extends Controller
         $model = new Candidate();
 
         // Filter gender
-        if ($gender = app('request')->input('gender'))
-        {
+        if ($gender = app('request')->input('gender')) {
             $model = $model->where('gender', strtoupper($gender));
         }
 
         // Filter religion
-        if ($religion = app('request')->input('religion'))
+        /*if ($religion = app('request')->input('religion'))
         {
             $model = $model->where('religion', $religion);
-        }
+        }*/
 
         // Filter legislature
-        if ($legislature = app('request')->input('legislature'))
-        {
+        if ($legislature = app('request')->input('legislature')) {
             $model = $model->where('legislature', $legislature);
         }
 
         // Filter party
-        if ($party = app('request')->input('party'))
-        {
+        if ($party = app('request')->input('party')) {
             $model = $model->where('party_id', (int) $party);
         }
 

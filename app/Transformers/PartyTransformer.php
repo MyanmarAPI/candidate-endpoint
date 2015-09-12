@@ -21,7 +21,7 @@ class PartyTransformer
         
         return [
             '_id'             => (string)$data->_id,
-            'party_id'      => $data->party_number,
+            'party_number'      => $data->party_number,
             'party_name'      => $data->party_name,
             'party_name_english'  => $data->party_name_english,
             'abbreviation' => $data->abbreviation,

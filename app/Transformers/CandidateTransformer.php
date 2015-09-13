@@ -37,7 +37,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'religion'          => $data->religion,
             'ward_village'      => $data->ward_village,
             'constituency'      => $data->constituency,
-            'party_id'          => $data->party_id,
+            'party_number'          => $data->party_id,
             'mother'            => $data->mother,
             'father'            => $data->father
         ];

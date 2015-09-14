@@ -20,6 +20,9 @@ class PartyReader extends Reader
         foreach ($keys as $index => $value)
         {
             switch ($value) {
+                case 'Id':
+                    $result[snake_case($value)] = (int)$data[$index];
+                    break;
                 case 'EstablishmentDate':
                 case 'EstablishmentApprovalDate':
                 case 'RegistrationApplicationDate':

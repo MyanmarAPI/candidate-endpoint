@@ -37,7 +37,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'religion'          => $data->religion,
             'ward_village'      => $data->ward_village,
             'constituency'      => $data->constituency,
-            'party_number'          => $data->party_id,
+            'party_id'          => $data->party_id,
             'mother'            => $data->mother,
             'father'            => $data->father
         ];
@@ -49,7 +49,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
         $partyId = $data->party_id;
 
         if ( ! is_null($partyId)) {
-            $party = (new Party())->getCollection()->first(['party_number' => $partyId]);
+            $party = (new Party())->getCollection()->first(['id' => $partyId]);
         }
 
         return $this->item($party, new PartyTransformer());

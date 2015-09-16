@@ -40,9 +40,14 @@ class MongoImportCommand extends Command
         $filename = $this->input->getArgument('name');
 
         $collection = $this->input->getOption('collection');
-
         if ( ! $collection) {
             $collection = $filename;
+        }
+
+        $drop = $this->input->getOption('drop');
+
+        if ( $drop) {
+            $this->call('iora:drop', ['name' => $collection]);
         }
 
         $this->import($filename, $collection);
@@ -140,6 +145,7 @@ class MongoImportCommand extends Command
     {
         return [
             ['collection', 'c', InputOption::VALUE_OPTIONAL, 'Collection name to import the data from file.'],
+            ['drop', 'd', InputOption::VALUE_NONE, 'Drop the collection before import.'],
         ];
     }
 

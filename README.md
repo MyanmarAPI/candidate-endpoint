@@ -37,6 +37,15 @@ used `collection` option argument for import.
     // Or shortcut --collection with -c
     php artisan mongo:import candidate_latest -c candidate
 
+*If you want to drop the collection before import, used `drop` option*
+
+    php artisan mongo:import candidate --drop
+    // Or shortcut
+    php artisan mongo:import candidate -d
+
+    php artisan mongo:import candidate_latest --collection candidate --drop
+    php artisan mongo:import candidate_latest -c candidate -d
+
     
 **Drop Collection**
 

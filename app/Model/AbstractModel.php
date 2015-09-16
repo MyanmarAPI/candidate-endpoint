@@ -150,6 +150,12 @@ abstract class AbstractModel
     {
         $page = (int)app('request')->input('page', 1);
         $perPage = (int)app('request')->input('per_page', 15);
+        // If perPage is greather than max limit 
+        // set max limit.
+        if ( $perPage > 200) {
+            $perPage = 200;
+        }
+
         $skip = $perPage * ($page - 1);
 
         $result = $this->getCollection()

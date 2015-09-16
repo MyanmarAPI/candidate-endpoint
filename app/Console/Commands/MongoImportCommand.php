@@ -10,6 +10,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 class MongoImportCommand extends Command
@@ -36,15 +37,21 @@ class MongoImportCommand extends Command
      */
     public function fire()
     {
-        $collection = $this->input->getArgument('name');
+        $filename = $this->input->getArgument('name');
 
-        $this->import($collection);
+        $collection = $this->input->getOption('collection');
+
+        if ( ! $collection) {
+            $collection = $filename;
+        }
+
+        $this->import($filename, $collection);
     }
 
-    protected function getFileWithPath($collection)
+    protected function getFileWithPath($filename)
     {
-        if ( strpos($collection, '.json') == false) {
-            $filename = $collection . '.json';
+        if ( strpos($filename, '.json') == false) {
+            $filename = $filename . '.json';
         }
 
         $file = storage_path('data/' . $filename);
@@ -62,9 +69,9 @@ class MongoImportCommand extends Command
      * @param  string $collection
      * @return void
      */
-    protected function import($collection)
+    protected function import($filename, $collection)
     {
-        $file = $this->getFileWithPath($collection);
+        $file = $this->getFileWithPath($filename);
 
         $host = $this->getMongoHost();
 
@@ -121,6 +128,18 @@ class MongoImportCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'Collection json file name to import']
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['collection', 'c', InputOption::VALUE_OPTIONAL, 'Collection name to import the data from file.'],
         ];
     }
 

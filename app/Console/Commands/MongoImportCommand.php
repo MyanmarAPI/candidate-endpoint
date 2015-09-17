@@ -20,18 +20,6 @@ class MongoImportCommand extends Command
 
     protected $description = 'Import mongo collection with json file';
 
-    protected $filesystem;
-
-    /**
-     * Constructor method for ImportCommand class
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->filesystem = app('files');
-    }
-
     /**
      * Fire the command
      */
@@ -61,8 +49,10 @@ class MongoImportCommand extends Command
 
         $file = storage_path('data/' . $filename);
 
-        if ( ! $this->filesystem->exists($file)) {
-            return $this->error('[ERROR !] File not found - ' . $file);
+        $filesystem = $this->laravel['files'];
+
+        if ( ! $filesystem->exists($file)) {
+            throw new \RuntimeException('[ERROR !] File not found - ' . $file);
         }
 
         return $file;
@@ -96,7 +86,26 @@ class MongoImportCommand extends Command
             throw new \RuntimeException($process->getErrorOutput());
         }
 
+        // Version Handel
+        if ( ! $this->input->getOption('keep')) {
+            $this->handelDataVersion($collection);
+        }
+
         $this->info('Finish mongo import to database '. $db . ' with collection '. $collection);
+    }
+
+    /**
+     * Handel data versioning.
+     *
+     * @param string $key
+     * @return void
+     */
+    protected function handelDataVersion($key)
+    {
+        $dataVersion = $this->laravel['data_version'];
+        $current = $dataVersion->current($key);
+        $new = $dataVersion->increment($key);
+        $this->info(sprintf('[Data version] %s is changes from %d to %d', $key, $current, $new));
     }
 
     /**
@@ -146,6 +155,7 @@ class MongoImportCommand extends Command
         return [
             ['collection', 'c', InputOption::VALUE_OPTIONAL, 'Collection name to import the data from file.'],
             ['drop', 'd', InputOption::VALUE_NONE, 'Drop the collection before import.'],
+            ['keep', 'k', InputOption::VALUE_NONE, 'Keep current version number. Don\'t change.'],
         ];
     }
 

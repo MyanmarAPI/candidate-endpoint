@@ -16,6 +16,15 @@ $app->get('/', function() use ($app) {
 });
 
 $app->group([
+    'prefix'    => '/health-check',
+], function () use ($app)
+{
+    $app->get('/', function() {
+        return response_ok(['message' => 'Ok.']);
+    });
+});
+
+$app->group([
     'middleware'=> 'auth',
     'prefix'    => 'candidate/v1',
     'namespace' => 'App\Http\Controllers'

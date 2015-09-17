@@ -109,6 +109,11 @@ class CandidateController extends Controller
             $model = $model->where('constituency.TS_PCODE', $con_ts_pcode);
         }
 
+        //Filter by CONSTITUENCY AM_PCODE
+        if ($con_am_pcode = app('request')->input('constituency_am_pcode')) {
+            $model = $model->where('constituency.AM_PCODE', $con_am_pcode);
+        }
+
         // Filter by Residency ST_PCODE 
         /*if ($res_st_pcode = app('request')->input('residency_st_pcode')) {
             $model = $model->where('residency.ST_PCODE', $res_st_pcode);

@@ -8,6 +8,7 @@ use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\ArraySerializer;
+use App\Transformers\Serializer\CustomSerializer;
 
 class Controller extends BaseController
 {
@@ -39,7 +40,7 @@ class Controller extends BaseController
 
         $manager = new Manager();
 
-        $manager->setSerializer(new ArraySerializer());
+        $manager->setSerializer(new CustomSerializer());
 
         if ( $includes = app('request')->input('_with')) {
             $manager->parseIncludes($includes);
@@ -72,7 +73,7 @@ class Controller extends BaseController
 
         $manager = new Manager();
 
-        $manager->setSerializer(new ArraySerializer());
+        $manager->setSerializer(new CustomSerializer());
 
         if ( $includes = app('request')->input('_with')) {
             $manager->parseIncludes($includes);

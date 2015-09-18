@@ -51,4 +51,28 @@ class CustomSerializer extends ArraySerializer
         return array($resourceKey ?: 'data' => $data);
     }
 
+    /**
+     * Serialize the meta.
+     *
+     * @param array $meta
+     *
+     * @return array
+     */
+    public function meta(array $meta)
+    {
+        $default['data_version'] = $this->getDataVersion();
+
+        return array('meta' => array_merge($meta, $default));
+    }
+
+    /**
+     * Get data version.
+     *
+     * @return int
+     */
+    protected function getDataVersion()
+    {
+        return app('data_version')->current('candidate');
+    }
+
 }

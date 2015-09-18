@@ -15,13 +15,6 @@ $app->get('/', function() use ($app) {
     return $app->welcome();
 });
 
-$app->get('/versions', function() use ($app) {
-    $dataVersion = app('data_version');
-    $versions['candidate'] = $dataVersion->current('candidate');
-    $versions['party'] = $dataVersion->current('party');
-    return response_ok($versions);
-});
-
 $app->group([
     'prefix'    => '/health-check',
 ], function () use ($app)
@@ -37,6 +30,12 @@ $app->group([
     'namespace' => 'App\Http\Controllers'
 ], function () use ($app)
 {
+    $app->get('/versions', function() use ($app) {
+        $dataVersion = app('data_version');
+        $versions['candidate'] = $dataVersion->current('candidate');
+        $versions['party'] = $dataVersion->current('party');
+        return response_ok($versions);
+    });
 
     $pre = 'v1.candidate.';
 

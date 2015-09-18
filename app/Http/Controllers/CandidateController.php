@@ -86,6 +86,17 @@ class CandidateController extends Controller
 
         // Filter legislature
         if ($legislature = app('request')->input('legislature')) {
+            switch ($legislature) {
+                case 'upper_house':
+                    $legislature = 'အမျိုးသားလွှတ်တော်';
+                    break;
+                case 'lower_house':
+                    $legislature = 'ပြည်သူ့လွှတ်တော်';
+                    break;
+                case 'state_region':
+                    $legislature = 'တိုင်းဒေသကြီး/ပြည်နယ် လွှတ်တော်';
+                    break;
+            }
             $model = $model->where('legislature', $legislature);
         }
 

@@ -2,6 +2,7 @@
 
 use Exception;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler {
 
@@ -36,6 +37,12 @@ class Handler extends ExceptionHandler {
      */
     public function render($request, Exception $e)
     {
+        $message = $e->getMessage() ?: null;
+
+        if ($e instanceof NotFoundHttpException) {
+            return response_missing();
+        }
+
         if ($e instanceof ModelNotFoundException) {
             
             return response()->json([ 'error' => [
@@ -43,8 +50,9 @@ class Handler extends ExceptionHandler {
                 'code'     => 404
                 ]],404);
         }
+
+        return response_error(!is_null($message) ? $message : 'Error occured!');
         
-        return parent::render($request, $e);
     }
 
 }

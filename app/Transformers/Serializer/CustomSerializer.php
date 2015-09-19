@@ -24,8 +24,12 @@ class CustomSerializer extends ArraySerializer
      */
     public function item($resourceKey, array $data)
     {
+
         if (isset($data['party']) && empty($data['party'])) {
             $data['party'] = new \StdClass();
+        } 
+        if (array_key_exists('mpid', $data)) {
+            return array($resourceKey ?: 'data' => $data);
         }
 
         return $data;

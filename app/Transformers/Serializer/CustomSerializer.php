@@ -60,6 +60,10 @@ class CustomSerializer extends ArraySerializer
      */
     public function meta(array $meta)
     {
+        if (empty($meta)) {
+            return array();
+        }
+        
         $default['data_version'] = $this->getDataVersion();
 
         return array('meta' => array_merge($meta, $default));

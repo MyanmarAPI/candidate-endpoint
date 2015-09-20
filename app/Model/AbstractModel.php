@@ -144,16 +144,18 @@ abstract class AbstractModel
 
     /**
      * Get items in pagination form
+     * @param  array  $fields
      * @return LengthAwarePaginator
      */
-    public function paginate()
+    public function paginate($fields = [])
     {
         $page = (int)app('request')->input('page', 1);
         $perPage = (int)app('request')->input('per_page', 15);
         // If perPage is greather than max limit 
         // set max limit.
-        if ( $perPage > 200) {
-            $perPage = 200;
+        $maxLimit = count($fields) <= 4 ? 400 : 200;
+        if ( $perPage > $maxLimit) {
+            $perPage = $maxLimit;
         }
 
         $skip = $perPage * ($page - 1);
@@ -161,7 +163,7 @@ abstract class AbstractModel
         $result = $this->getCollection()
                         ->limit($perPage)
                         ->skip($skip)
-                        ->get();
+                        ->get($fields);
 
         return new LengthAwarePaginator($result, $this->getCollection()->count(), $perPage, $page);
     }

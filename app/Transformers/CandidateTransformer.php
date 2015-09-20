@@ -25,7 +25,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
 
     protected $fields = [];
 
-    public function __construct($fields)
+    public function __construct($fields = [])
     {
         $this->fields = $fields;
     }

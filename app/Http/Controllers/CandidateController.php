@@ -28,7 +28,7 @@ class CandidateController extends Controller
             return response_missing();
         }
 
-        $item = $this->transform($data, new CandidateTransformer(), false);
+        $item = $this->transform($data, new CandidateTransformer($this->getRequestFields(app('request'))), false);
 
         return response_ok($item);
     }
@@ -61,12 +61,13 @@ class CandidateController extends Controller
         }
 
         $q = app('request')->input('q');
+        $fields = $this->getRequestFields(app('request'));
 
         $model = new Candidate();
 
-        $result = $model->like('name', $q)->paginate();
+        $result = $model->like('name', $q)->paginate($fields);
 
-        $data = $this->transform($result, new CandidateTransformer(), true);
+        $data = $this->transform($result, new CandidateTransformer($fields), true);
 
         return response_ok($data);
     }

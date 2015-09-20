@@ -63,6 +63,8 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
         foreach ($fields as $f) {
             if ( in_array($f, $this->dates)) {
                 $result[$f] = timestamp($data->{$f});
+            } elseif ($f == 'id') {
+                $result[$f] = (string) $data->_id;
             } else {
                 $result[$f] = $data->{$f};
             }

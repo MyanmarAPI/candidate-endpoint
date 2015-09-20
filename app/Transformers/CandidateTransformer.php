@@ -21,8 +21,21 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
         'party'
     ];
 
+    protected $dates = ['birthdate'];
+
+    protected $fields = [];
+
+    public function __construct($fields)
+    {
+        $this->fields = $fields;
+    }
+
     public function transform($data)
     {
+        if ( ! empty($this->fields)) {
+            return $this->transformFieldOnly($this->fields, $data);
+        }
+
         return [
             'id'                => (string)$data->_id,
             'name'              => $data->name,
@@ -41,6 +54,21 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'mother'            => $data->mother,
             'father'            => $data->father
         ];
+    }
+
+    protected function transformFieldOnly($fields, $data)
+    {
+        $result = [];
+
+        foreach ($fields as $f) {
+            if ( in_array($f, $this->dates)) {
+                $result[$f] = timestamp($data->{$f});
+            } else {
+                $result[$f] = $data->{$f};
+            }
+        }
+
+        return $result;
     }
 
     public function includeParty($data)

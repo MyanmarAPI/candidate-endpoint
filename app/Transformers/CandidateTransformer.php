@@ -24,7 +24,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
     public function transform($data)
     {
         return [
-            'id'                => (string)$data->_id,
+            'id'                => $data->candidate_id,
             'name'              => $data->name,
             'mpid'              => $data->mpid,
             'gender'            => $data->gender,

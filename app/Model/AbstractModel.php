@@ -82,7 +82,7 @@ abstract class AbstractModel
      */
     public function getBy($key, $value)
     {
-        return $this->getCollection()->first([$key, $value]);
+        return $this->getCollection()->first([$key => $value]);
     }
 
     /**

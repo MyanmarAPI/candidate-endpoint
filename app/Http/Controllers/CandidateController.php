@@ -22,7 +22,8 @@ class CandidateController extends Controller
      */
     public function show($id)
     {
-        $data = (new Candidate())->find($id);
+        $data = (new Candidate())->getBy('candidate_id', $id);
+        //$data = (new Candidate())->find($id);
 
         if (!$data) {
             return response_missing();

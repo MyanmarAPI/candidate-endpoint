@@ -151,7 +151,11 @@ class CandidateController extends Controller
             $model = $model->where('residency.DT_PCODE', $res_dt_pcode);
         }*/
 
-        return $model->paginate(array_merge(['candidate_id'], $fields));
+        if (!empty($fields)) {
+            $fields = array_merge(['candidate_id'], $fields);
+        }
+
+        return $model->paginate($fields);
     }
 
     /**

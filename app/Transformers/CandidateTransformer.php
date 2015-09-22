@@ -64,7 +64,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             if ( in_array($f, $this->dates)) {
                 $result[$f] = timestamp($data->{$f});
             } elseif ($f == 'id') {
-                $result[$f] = (string) $data->_id;
+                $result[$f] = $data->candidate_id;
             } else {
                 $result[$f] = $data->{$f};
             }

@@ -138,7 +138,7 @@ class CandidateController extends Controller
 
         //Filter by CONSTITUENCY_NUMBER
         if ($con_num = $request->input('constituency_number')) {
-            $model = $model->where('constituency.number', $con_num);
+            $model = $model->where('constituency.number', (int)$con_num);
         }
 
         // Filter by Residency ST_PCODE 

@@ -137,8 +137,14 @@ class CandidateController extends Controller
         }
 
         //Filter by CONSTITUENCY_NUMBER
-        if ($con_num = $request->input('constituency_number')) {
+        if ($request->has('constituency_number')) {
+            $con_num = $request->input('constituency_number');
             $model = $model->where('constituency.number', (int)$con_num);
+        }
+
+        //Filter by CONSTITUENCY_PARENT
+        if ($con_parent = $request->input('constituency_parent')) {
+            $model = $model->where('constituency.parent', $con_parent);
         }
 
         // Filter by Residency ST_PCODE 

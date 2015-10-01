@@ -10,6 +10,8 @@
 
 namespace App\Http\Controllers;
 
+use MongoDate;
+use Carbon\Carbon;
 use App\Model\Candidate;
 use App\Transformers\CandidateTransformer;
 
@@ -147,6 +149,23 @@ class CandidateController extends Controller
             $model = $model->where('constituency.parent', $con_parent);
         }
 
+        // Filter by BirthDate
+        if ($request->has('bd_from') && $request->has('bd_to')) {
+            $from = $this->asMongoDate($request->input('bd_from'));
+            $to = $this->asMongoDate($request->input('bd_to'));
+
+            if ( ! is_null($from) || ! is_null($to)) {
+                $model = $model->where('birthdate', [
+                    '$gte' => $from, 
+                    '$lte' => $to
+                ]);
+            }
+        }
+
+        if ($con_parent = $request->input('constituency_parent')) {
+            $model = $model->where('constituency.parent', $con_parent);
+        }
+
         // Filter by Residency ST_PCODE 
         /*if ($res_st_pcode = $request->input('residency_st_pcode')) {
             $model = $model->where('residency.ST_PCODE', $res_st_pcode);
@@ -162,6 +181,27 @@ class CandidateController extends Controller
         }
 
         return $model->paginate($fields);
+    }
+
+    /**
+     * Convert given date value to MongoDate instance.
+     *
+     * @param  string $value Format is Y-m-d
+     * @return \MongoDate
+     */
+    protected function asMongoDate($value)
+    {
+        if (is_numeric($value)) {
+            $value = Carbon::createFromTimestamp($value);
+        } elseif (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value)) {
+            $value = Carbon::createFromFormat('Y-m-d', $value)->startOfDay();
+        }
+
+        if ( $value instanceof Carbon) {
+            return new MongoDate($value->getTimestamp());
+        }
+
+        return null;
     }
 
     /**

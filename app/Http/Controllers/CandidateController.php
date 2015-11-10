@@ -166,6 +166,14 @@ class CandidateController extends Controller
             $model = $model->where('constituency.parent', $con_parent);
         }
 
+        //Filter by Votes (Temp)
+        $votes = (int)$request->input('votes');
+        if ($votes === -1) {
+            $model = $model->where('votes', -1);
+        } else if ($votes === 1) {
+            $model = $model->where('votes', '!=', -1);
+        }
+
         // Filter by Residency ST_PCODE 
         /*if ($res_st_pcode = $request->input('residency_st_pcode')) {
             $model = $model->where('residency.ST_PCODE', $res_st_pcode);

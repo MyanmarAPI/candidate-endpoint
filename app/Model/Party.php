@@ -34,4 +34,17 @@ class Party extends AbstractModel
 
     	return false;
     }
+
+    public static function getStaticPartyIdByName($name)
+    {
+        $inc = new static;
+
+        $result = $inc->where('party_name', $name)->get();
+
+        if ($result) {
+            return (string)$result[0]->id;
+        }
+
+        return false;
+    }
 }

@@ -25,19 +25,13 @@ class CandidateReader extends Reader
                     $result['name'] = $data[$index];
                     break;
                 case 'birthdate':
-                    $result['dob'] = ($data[$index]) ? new \MongoDate(strtotime($data[$index])) : '';
+                    $result['birthdate'] = ($data[$index]) ? new \MongoDate(strtotime($data[$index])) : '';
                     break;
-                case 'photo_file_name' :
-                    $result['photo_url'] = $data[$index];
+                case 'nationality' : 
+                    $result['ethnicity'] = $data[$index];
                     break;
                 case 'house' : 
                     $result['legislature'] = $data[$index];
-                    break;
-                case 'state' : 
-                    $result['constituency']['state'] = $data[$index];
-                    $pcode = $this->getRandomPcode();
-                    $result['constituency']['ST_PCODE'] = $pcode['ST_PCODE'];
-                    $result['constituency']['DT_PCODE'] = $pcode['DT_PCODE'];
                     break;
                 case 'constituency_name' : 
                     $result['constituency']['name'] = $data[$index];
@@ -45,19 +39,29 @@ class CandidateReader extends Reader
                 case 'constituency_number' : 
                     $result['constituency']['number'] = $data[$index];
                     break;
+                case 'state' : 
+                    $result['constituency']['parent'] = $data[$index];
+                    break;
+                case 'ST_PCODE' :
+                    $result['constituency']['ST_PCODE'] = $data[$index];
+                    break;
+                case 'DT_PCODE' :
+                    $result['constituency']['DT_PCODE'] = $data[$index];
+                    break;
+                case 'TS_PCODE' :
+                    $result['constituency']['TS_PCODE'] = $data[$index];
+                    break;
+                case 'AM_PCODE' :
+                    $result['constituency']['AM_PCODE'] = $data[$index];
+                    break;
                 case 'party' : 
+                    //Get static ID
                     $result['party_id'] = $this->getPartyID($data[$index]);
                     break;
-                case 'occupation' :
+                /*case 'occupation' :
                 case 'education' : 
                     $result[$value] = $this->makeName($data[$index]);
-                    break;
-                case 'ward_village' : 
-                    $result['residency']['name'] = $data[$index];
-                    $pcode = $this->getRandomPcode();
-                    $result['residency']['ST_PCODE'] = $pcode['ST_PCODE'];
-                    $result['residency']['DT_PCODE'] = $pcode['DT_PCODE'];
-                    break;
+                    break;*/
                 case 'voter_list_number' : 
                     $result['residency']['voter_count'] = $data[$index];
                     break;
@@ -65,7 +69,7 @@ class CandidateReader extends Reader
                     $result['father']['name'] = $data[$index];
                     break;
                 case 'father_nationality' :
-                    $result['father']['nationality'] = $data[$index];
+                    $result['father']['ethnicity'] = $data[$index];
                     break;
                 case 'father_religion' :
                      $result['father']['religion'] = $data[$index];
@@ -74,7 +78,7 @@ class CandidateReader extends Reader
                     $result['mother']['name'] = $data[$index];
                     break;
                 case 'mother_nationality' : 
-                    $result['mother']['nationality'] = $data[$index];
+                    $result['mother']['ethnicity'] = $data[$index];
                     break;
                 case 'mother_religion' : 
                     $result['mother']['religion'] = $data[$index];
@@ -90,26 +94,13 @@ class CandidateReader extends Reader
 
     protected function getPartyID($data)
     {
-        $id = Party::getPartyidByName($data);
+        $id = Party::getStaticPartyIdByName($data);
 
         if ($id) {
             return $id;
         }
 
         return $data;
-    }
-
-    protected function getRandomPcode()
-    {
-        $rand_st = rand(1,18);
-
-        $st_num = sprintf("%02d", $rand_st);
-
-        $ST_PCODE = "MMR0".$st_num;
-
-        $DT_PCODE = $ST_PCODE."D001";
-
-        return ['ST_PCODE' => $ST_PCODE, 'DT_PCODE' => $DT_PCODE];
     }
 
     protected function makeName($data)

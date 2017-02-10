@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\ImportCandidateCommand::class,
         \App\Console\Commands\MongoImportCommand::class,
         \App\Console\Commands\DropCommand::class,
+        \App\Console\Commands\DropByElectionYearCommand::class
     ];
 
     /**

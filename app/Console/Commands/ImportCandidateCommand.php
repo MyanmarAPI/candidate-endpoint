@@ -12,6 +12,7 @@ namespace App\Console\Commands;
 
 use App\Iora\CandidateReader;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputOption;
 
 class ImportCandidateCommand extends Command
 {
@@ -22,7 +23,7 @@ class ImportCandidateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:candidate {filename}';
+    protected $signature = 'import:candidate {filename} {--keep}';
 
     protected $description = 'Import all candidate data from csv file';
 
@@ -67,6 +68,37 @@ class ImportCandidateCommand extends Command
 
         $reader->model('candidate')->import();
 
+        // Version Handel
+        if ( ! $this->option('keep')) {
+            $this->handelDataVersion('candidate');
+        }
+
         $this->info('[SUCCESS] Imported ' . $reader->getRows() . ' rows');
+    }
+
+    /**
+     * Handel data versioning.
+     *
+     * @param string $key
+     * @return void
+     */
+    protected function handelDataVersion($key)
+    {
+        $dataVersion = $this->laravel['data_version'];
+        $current = $dataVersion->current($key);
+        $new = $dataVersion->increment($key);
+        $this->info(sprintf('[Data version] %s is changes from %d to %d', $key, $current, $new));
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['keep', 'k', InputOption::VALUE_NONE, 'Keep current version number. Don\'t change.'],
+        ];
     }
 }

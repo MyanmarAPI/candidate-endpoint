@@ -54,4 +54,15 @@ $app->group([
         'uses'  => 'CandidateController@show'
     ]);
 
+    //Call with Year Indicators
+    $app->get('{year}/list', [
+        'as'    => $pre . 'year.list',
+        'uses'  => 'CandidateController@candidateList'
+    ]);
+
+    $app->get('{year}/search', [
+        'as'    => $pre . 'year.search',
+        'uses'  => 'CandidateController@search'
+    ]);
+
 });

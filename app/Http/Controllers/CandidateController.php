@@ -40,11 +40,11 @@ class CandidateController extends Controller
      * Get candidate list
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function candidateList()
+    public function candidateList($year='2015')
     {
         $fields = $this->getRequestFields(app('request'));
 
-        $data = $this->transform($this->query($fields), new CandidateTransformer($fields), true);
+        $data = $this->transform($this->query($fields, $year), new CandidateTransformer($fields), true);
 
         return response_ok($data);
     }
@@ -55,7 +55,7 @@ class CandidateController extends Controller
      * @return void
      * @author 
      **/
-    public function search()
+    public function search($year='2015')
     {
         if (!app('request')->has('q')) {
 
@@ -68,14 +68,22 @@ class CandidateController extends Controller
 
         $model = new Candidate();
 
-        $result = $model->like('name', $q)->paginate($fields);
+        $model = $model->like('name', $q);
+
+        if ($year == '2017') {
+            $model = $model->where('election', '2017ByElection');
+        } else {
+            $model = $model->where('election', '2015GeneralElection');
+        }
+
+        $result = $model->paginate($fields);
 
         $data = $this->transform($result, new CandidateTransformer($fields), true);
 
         return response_ok($data);
     }
 
-    protected function query($fields = [])
+    protected function query($fields = [], $year = '2015')
     {
         $request = app('request');
 
@@ -172,6 +180,13 @@ class CandidateController extends Controller
             $model = $model->where('votes', -1);
         } else if ($votes === 1) {
             $model = $model->where('votes', '!=', -1);
+        }
+
+        //Filter by Election Year
+        if ($year == '2017') {
+            $model = $model->where('election', '2017ByElection');
+        } else {
+            $model = $model->where('election', '2015GeneralElection');
         }
 
         // Filter by Residency ST_PCODE 

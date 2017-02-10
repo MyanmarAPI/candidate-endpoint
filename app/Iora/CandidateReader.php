@@ -37,7 +37,7 @@ class CandidateReader extends Reader
                     $result['constituency']['name'] = $data[$index];
                     break;
                 case 'constituency_number' : 
-                    $result['constituency']['number'] = $data[$index];
+                    $result['constituency']['number'] = (int)$data[$index];
                     break;
                 case 'state' : 
                     $result['constituency']['parent'] = $data[$index];
@@ -46,13 +46,13 @@ class CandidateReader extends Reader
                     $result['constituency']['ST_PCODE'] = $data[$index];
                     break;
                 case 'DT_PCODE' :
-                    $result['constituency']['DT_PCODE'] = $data[$index];
+                    $result['constituency']['DT_PCODE'] = (empty($data[$index])) ? null : $data[$index];
                     break;
                 case 'TS_PCODE' :
-                    $result['constituency']['TS_PCODE'] = $data[$index];
+                    $result['constituency']['TS_PCODE'] = (empty($data[$index])) ? null : $data[$index];
                     break;
                 case 'AM_PCODE' :
-                    $result['constituency']['AM_PCODE'] = $data[$index];
+                    $result['constituency']['AM_PCODE'] = (empty($data[$index])) ? null : $data[$index];
                     break;
                 case 'party' : 
                     //Get static ID
@@ -84,7 +84,7 @@ class CandidateReader extends Reader
                     $result['mother']['religion'] = $data[$index];
                     break;
                 default:
-                    $result[$value] = $data[$index];
+                    $result[$value] = (empty($data[$index])) ? null : $data[$index];
                     break;
             }
         }

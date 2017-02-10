@@ -39,11 +39,15 @@ class Party extends AbstractModel
     {
         $inc = new static;
 
+        if ($name == 'တစ်သီးပုဂ္ဂလ') {
+            return null;
+        }
+
         $result = $inc->where('party_name', $name)->get();
 
         if ($result) {
-            return (string)$result[0]->id;
-        }
+            return $result[0]->id;
+        } 
 
         return false;
     }

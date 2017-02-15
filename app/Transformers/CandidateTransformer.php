@@ -53,7 +53,8 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
             'party_id'          => $data->party_id,
             'mother'            => $data->mother,
             'father'            => $data->father,
-            'votes'             => ($data->votes > 0) ? 1 : -1
+            'votes'             => ($data->votes > 0) ? 1 : -1,
+            'election_year'     => ($data->election == '2015GeneralElection') ? 2015 : 2017
         ];
     }
 

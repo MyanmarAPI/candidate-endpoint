@@ -74,8 +74,13 @@ $app->group([
 
     //Party with Year Indicators
     $app->get('contesting-party/{year}', [
-        'as' => 'year.party',
-        'uses' => 'CandidateController@getPartyByYear'
+        'as' => 'party.electionyear',
+        'uses' => 'PartyController@getPartyByYear'
+    ]);
+
+    $app->get('contesting-party/{year}/search', [
+        'as' => 'party.electionyear',
+        'uses' => 'PartyController@search'
     ]);
 
 });

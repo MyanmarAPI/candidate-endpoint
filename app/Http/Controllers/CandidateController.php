@@ -13,7 +13,9 @@ namespace App\Http\Controllers;
 use MongoDate;
 use Carbon\Carbon;
 use App\Model\Candidate;
+use App\Model\Party;
 use App\Transformers\CandidateTransformer;
+use App\Transformers\PartyTransformer;
 
 class CandidateController extends Controller
 {
@@ -225,6 +227,34 @@ class CandidateController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Get Party by Year
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     **/
+    public function getPartyByYear($year = '2015')
+    {
+
+        if ($year == '2017') {
+            $election = '2017ByElection';
+        } else {
+            $election = '2015GeneralElection';
+        }
+
+        $model = new Candidate();
+
+        $party_ids = $model->distinct("party_id", ["election" => $election]);
+
+        $party = new Party();
+
+        $result = $party->where("id", ['$in' => $party_ids])
+                            ->paginate();
+
+        $data = $this->transform($result, new PartyTransformer(), true);
+
+        return response_ok($data);
     }
 
     /**

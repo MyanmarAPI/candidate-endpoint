@@ -9,9 +9,10 @@
  */
 
 namespace App\Transformers;
+use App\Transformers\Contracts\TransformerInterface;
+use League\Fractal\TransformerAbstract;
 
-
-class PartyTransformer
+class PartyTransformer extends TransformerAbstract implements TransformerInterface
 {
     public function transform($data)
     {

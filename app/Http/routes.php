@@ -66,3 +66,16 @@ $app->group([
     ]);
 
 });
+
+$app->group([
+    'middleware'=> 'auth',
+    'namespace' => 'App\Http\Controllers'
+], function () use ($app) {
+
+    //Party with Year Indicators
+    $app->get('contesting-party/{year}', [
+        'as' => 'year.party',
+        'uses' => 'CandidateController@getPartyByYear'
+    ]);
+
+});

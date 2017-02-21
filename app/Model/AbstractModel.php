@@ -104,6 +104,16 @@ abstract class AbstractModel
     }
 
     /**
+     * Get Distinct Values
+     *
+     * @return array
+     **/
+    public function distinct($key, $query)
+    {
+        return $this->getCollection()->distinct($key, $query);
+    }
+
+    /**
      * Get count of all documents from specific collection
      * @return int
      */

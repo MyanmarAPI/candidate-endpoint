@@ -170,7 +170,14 @@ abstract class AbstractModel
 
         $skip = $perPage * ($page - 1);
 
+        $sort = json_decode(app('request')->input('sort', '{}'), true);
+
+        if (!is_array($sort)) {
+            $sort = [];
+        }
+
         $result = $this->getCollection()
+                        ->sort($sort)
                         ->limit($perPage)
                         ->skip($skip)
                         ->get($fields);

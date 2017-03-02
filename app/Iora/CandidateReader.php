@@ -114,7 +114,7 @@ class CandidateReader extends Reader
     }
 
     protected function getSortingName($name) {
-        return trim(preg_replace('/\b(\ဦး|ဒေါ်|ဒေါက်တာ|Dr.)/','',$name, 1));
+        return trim(preg_replace('/^(\ဦး|ဒေါ်|ဒေါက်တာ|Dr.)/','',$name, 1));
     }
 
 }

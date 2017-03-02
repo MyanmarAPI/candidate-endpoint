@@ -39,6 +39,7 @@ class CandidateTransformer extends TransformerAbstract implements TransformerInt
         return [
             'id'                => $data->candidate_id,
             'name'              => $data->name,
+            'sorting_name'      => $data->sorting_name,
             'mpid'              => $data->mpid,
             'gender'            => $data->gender,
             'photo_url'         => $data->photo_url,

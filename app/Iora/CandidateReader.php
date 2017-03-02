@@ -23,6 +23,7 @@ class CandidateReader extends Reader
             switch ($value) {
                 case 'full_name':
                     $result['name'] = $data[$index];
+                    $result['sorting_name'] = $this->getSortingName($data[$index]);
                     break;
                 case 'birthdate':
                     $result['birthdate'] = ($data[$index]) ? new \MongoDate(strtotime($data[$index])) : '';
@@ -110,6 +111,10 @@ class CandidateReader extends Reader
             return preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','',$item);
 
         }, explode('၊', $data));
+    }
+
+    protected function getSortingName($name) {
+        return trim(preg_replace('/\b(\ဦး|ဒေါ်|ဒေါက်တာ|Dr.)/','',$name, 1));
     }
 
 }
